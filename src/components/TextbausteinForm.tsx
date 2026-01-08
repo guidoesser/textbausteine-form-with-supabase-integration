@@ -26,7 +26,7 @@ export default function TextbausteinForm() {
 
       const dataToInsert = {
         textbaustein: formData.textbaustein,
-        keywords: keywordsArray, // Will be automatically converted to JSONB by Supabase
+        keywords: keywordsArray,
         topic: formData.topic
       }
 
@@ -37,9 +37,9 @@ export default function TextbausteinForm() {
 
       if (error) throw error
 
-      console.log('✅ Saved successfully as JSONB:', data)
+      console.log('✅ Saved successfully:', data)
 
-      setStatus({ type: 'success', message: 'Textbaustein erfolgreich als JSON gespeichert!' })
+      setStatus({ type: 'success', message: 'Textbaustein erfolgreich gespeichert!' })
       setFormData({ textbaustein: '', keywords: [], topic: '' })
       setKeywordInput('')
       
@@ -111,7 +111,7 @@ export default function TextbausteinForm() {
             <div className="space-y-3">
               <label htmlFor="keywords" className="flex items-center gap-2 text-white font-semibold text-lg">
                 <Tag className="w-5 h-5 text-[#38bdf8]" />
-                Keywords (als JSON gespeichert)
+                Keywords
               </label>
               <input
                 type="text"
@@ -122,34 +122,19 @@ export default function TextbausteinForm() {
                 placeholder="keyword1, keyword2, keyword3..."
               />
               {keywordInput && (
-                <div className="space-y-3">
-                  <div className="flex flex-wrap gap-2">
-                    {keywordInput
-                      .split(',')
-                      .map(keyword => keyword.trim())
-                      .filter(keyword => keyword.length > 0)
-                      .map((keyword, index) => (
-                        <span
-                          key={index}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#38bdf8]/20 to-[#38bdf8]/10 border border-[#38bdf8]/30 rounded-xl text-[#38bdf8] font-medium text-sm"
-                        >
-                          {keyword}
-                        </span>
-                      ))}
-                  </div>
-                  <div className="bg-[#171717] border border-[#2F2F2F] rounded-xl p-4">
-                    <p className="text-xs text-[#A3A3A3] mb-2 font-semibold">JSON Preview:</p>
-                    <pre className="text-[#10b981] text-sm font-mono">
-                      {JSON.stringify(
-                        keywordInput
-                          .split(',')
-                          .map(k => k.trim())
-                          .filter(k => k.length > 0),
-                        null,
-                        2
-                      )}
-                    </pre>
-                  </div>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {keywordInput
+                    .split(',')
+                    .map(keyword => keyword.trim())
+                    .filter(keyword => keyword.length > 0)
+                    .map((keyword, index) => (
+                      <span
+                        key={index}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#38bdf8]/20 to-[#38bdf8]/10 border border-[#38bdf8]/30 rounded-xl text-[#38bdf8] font-medium text-sm"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
                 </div>
               )}
             </div>
@@ -187,7 +172,7 @@ export default function TextbausteinForm() {
               ) : (
                 <>
                   <Save className="w-6 h-6" />
-                  Als JSON speichern
+                  Speichern
                 </>
               )}
             </button>
@@ -197,8 +182,8 @@ export default function TextbausteinForm() {
         {/* Info Card */}
         <div className="mt-8 bg-[#262626]/50 border border-[#2F2F2F] rounded-2xl p-6 backdrop-blur-sm">
           <p className="text-[#A3A3A3] text-sm leading-relaxed">
-            <strong className="text-white">Hinweis:</strong> Keywords werden jetzt als JSONB in der Datenbank gespeichert. 
-            Das ermöglicht effiziente JSON-Operationen und Queries. Die Live-Vorschau zeigt das exakte JSON-Format.
+            <strong className="text-white">Hinweis:</strong> Geben Sie Keywords durch Kommas getrennt ein. 
+            Die Vorschau zeigt Ihre eingegebenen Keywords als Tags an.
           </p>
         </div>
       </div>
